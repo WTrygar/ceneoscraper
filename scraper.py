@@ -13,29 +13,29 @@ page_tree = BeautifulSoup(page_respons.text, 'html.parser')
 opinions = page_tree.find_all("li", "review-box")
 
 #wydobycie składowych d;a pojedynczej opinii
-opinion = opinions.pop()
-
-opinion_id = opinion["data-entry-id"]
-author = opinion.find("div", "reviewer-name-line").string
-recommendation = opinion.find("div","product-review-summary").find("em").string
-stars = opinon.find("span", "reviewer-score-count")
-purchased = opinion.find("div","product-review-pz")
-# - identyfikator: li.review-box["data-entry-id"]
-# - autor: div.reviewer-name-line
-# - rekomendacja: div.product-review-summary > em
-# - gwiazdki: span.review-score-count
-# - potwierdzona zakupem: div.product-review-pz
-# - data wystawienia: span.review-time > time["datetime"] - pierwszy element listy
-# - data zakupu: span.review-time > time["datetime"] - drugi element listy
-useful = opinion.find("button","vote-yes").find("span").string
-useless = opinion.find("button","vote-no").find("span").string
-content = opinion.find("p","product-review-body").get_text()
-# - przydatna: span[id=^vote-yes]
-#              button.vote-yes["data-total-vote"]
-#              button.vote-yes > span
-# - nieprzydatna: span[id=^vote-no]
-#              button.vote-no["data-total-vote"]
-#              button.vote-no > span
-# - treść: p.product-review-body
-# - wady: div.cons-cell > ul
-# - zalety: div.pros-cell > ul
+for opinion in opinions:
+    opinion_id = opinion["data-entry-id"]
+    author = opinion.find("div", "reviewer-name-line").string
+    recommendation = opinion.find("div","product-review-summary").find("em").string
+    stars = opinon.find("span", "reviewer-score-count")
+    try:
+        purchased = opionion.find("div","product-review-pz").string
+    except IndexError:
+        purchased = None
+    dates = opinion.find("span", "review-time").find_all("time")
+    review_date = dates.pop(0)["datetime"]
+    try:
+        purchase_date = dates.pop(0)["datetime"]
+    except IndexError:
+        purchase_date = None
+    useful = opinion.find("button","vote-yes").find("span").string
+    useless = opinion.find("button","vote-no").find("span").string
+    content = opinion.find("p","product-review-body").get_text()
+    try:
+        pros = opinion.find("div","pros-cell").find("ul").get_text()
+    except IndexError:
+        pros = None
+    try:
+        cons = opinion.find("div","cons-cell").find("ul").get_text()
+    except IndexError:
+        cons = None
