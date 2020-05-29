@@ -27,8 +27,8 @@ wykonamie podstawowych obliczeń na danych w ramce danych
 wykonanie prostych wykresów na podstawie danych w ramce danych
 ## Etap 6
 struktura aplikacji
-/CeneoScraper/
 
+/CeneoScraper/
    /run.py  
    /config.py  
    /app/  
