@@ -13,8 +13,4 @@ def remove_whitespaces(string):
     try:
         return string.replace("\n", ", ").replace("\r", ", ")
     except AttributeError:
-<<<<<<< HEAD
         pass
-=======
-        pass
->>>>>>> 427421ad4af5d50d5ba6ab5329b98f09db7a0aea
